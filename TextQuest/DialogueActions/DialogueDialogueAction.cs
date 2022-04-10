@@ -20,15 +20,5 @@ namespace TextQuest
             _nextDialogue = dialogue;
             // TODO: сделать глубокую проверку вперед, чтобы не было двух диалоговых событий в одной цепочке
         }
-
-        protected override void PerformFeatures()
-        {
-            MoveToNextDialogue();
-        }
-
-        private void MoveToNextDialogue()
-        {
-            
-        }
     }
 }

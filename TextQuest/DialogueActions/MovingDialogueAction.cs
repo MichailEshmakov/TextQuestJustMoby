@@ -22,15 +22,5 @@ namespace TextQuest
             _room = room;
             _enterPhrase = enterPrase;
         }
-
-        protected override void PerformFeatures()
-        {
-            Move();
-        }
-
-        private void Move()
-        {
-            _room.Enter();
-        }
     }
 }

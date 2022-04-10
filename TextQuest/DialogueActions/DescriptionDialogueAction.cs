@@ -9,15 +9,5 @@ namespace TextQuest
     public class DescriptionDialogueAction : DialogueAction
     {
         private string _description;
-
-        protected override void PerformFeatures()
-        {
-            ShowDescription();
-        }
-
-        private void ShowDescription()
-        {
-            
-        }
     }
 }

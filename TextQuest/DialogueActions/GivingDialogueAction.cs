@@ -8,14 +8,6 @@ namespace TextQuest
 {
     public class GivingDialogueAction : DialogueAction
     {
-        protected override void PerformFeatures()
-        {
-            Give();
-        }
 
-        private void Give()
-        {
-            
-        }
     }
 }

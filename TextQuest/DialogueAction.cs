@@ -13,7 +13,8 @@ namespace TextQuest
 
         public string Name => _name;
         public DialogueAction Next => _next;
-        public event Action<DialogueAction> Done;
+
+        public event Action<DialogueAction> Doing;
 
         public DialogueAction(string name = "", DialogueAction next = null)
         {
@@ -23,12 +24,9 @@ namespace TextQuest
 
         public void Do()
         {
-            PerformFeatures();
-            Done?.Invoke(this);
+            Doing?.Invoke(this);
             if (_next != null)
                 _next.Do();
         }
-
-        protected abstract void PerformFeatures();
     }
 }

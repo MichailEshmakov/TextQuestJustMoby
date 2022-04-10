@@ -69,30 +69,29 @@ namespace TextQuest
 
         private void UnsubscribeDeeply(DialogueAction action)
         {
-            action.Done -= OnActionDone;
+            action.Doing -= OnActionDoing;
             if (action.Next != null)
                 UnsubscribeDeeply(action.Next);
         }
 
         private void SubscribeDeeply(DialogueAction action)
         {
-            action.Done += OnActionDone;
+            action.Doing += OnActionDoing;
             if (action.Next != null)
                 SubscribeDeeply(action.Next);
         }
 
-        private void OnActionDone(DialogueAction action)
+        private void OnActionDoing(DialogueAction action)
         {
-            if (action is DialogueDialogueAction)
+            if (action is DialogueDialogueAction dialogueDialogueAction)
             {
-                DialogueDialogueAction dialogueDialogueAction = (DialogueDialogueAction)action;
                 SetDialogue(dialogueDialogueAction.NextDialogue);
             }
-            else if (action is MovingDialogueAction)
+            else if (action is MovingDialogueAction movingDialogueAction)
             {
-                MovingDialogueAction movingDialogueAction = (MovingDialogueAction)action;
                 SetRoom(movingDialogueAction.Room);
             }
+
         }
     }
 }
