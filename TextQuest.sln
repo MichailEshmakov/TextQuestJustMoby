@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextQuest", "TextQuest\TextQuest.csproj", "{832E9D63-F03B-4814-9089-B49578742605}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{832E9D63-F03B-4814-9089-B49578742605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{832E9D63-F03B-4814-9089-B49578742605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{832E9D63-F03B-4814-9089-B49578742605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{832E9D63-F03B-4814-9089-B49578742605}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3ECA76C4-C256-440A-81E2-C16B4A93585F}
+	EndGlobalSection
+EndGlobal
