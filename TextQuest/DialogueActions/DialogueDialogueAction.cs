@@ -12,7 +12,8 @@ namespace TextQuest
 
         public Dialogue NextDialogue => _nextDialogue;
 
-        public DialogueDialogueAction(Dialogue dialogue, string name = "", DialogueAction next = null) : base(name, next)
+        public DialogueDialogueAction(Dialogue dialogue, string name = null, DialogueAction next = null) : 
+            base(name ?? dialogue.PlayerPhrase, next)
         {
             if (dialogue == null)
                 throw new ArgumentNullException(nameof(dialogue));

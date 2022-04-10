@@ -12,8 +12,21 @@ namespace TextQuest
 
         static void Main(string[] args)
         {
+            Dialogue robHoboDialogue = new Dialogue("Забрать всё что у него есть", "Я теперь умру с голоду");
+            Dialogue saveHoboDialogue = new Dialogue("Оставить бродягу в покое", "Бродяга всадил Вам нож в спину как только Вы отвернулись");
+
+            DialogueDialogueAction robHoboAction = new DialogueDialogueAction(robHoboDialogue);
+            DialogueDialogueAction saveHoboAction = new DialogueDialogueAction(saveHoboDialogue);
+
+            List<DialogueAction> hoboActions = new List<DialogueAction> { robHoboAction, saveHoboAction };
+            Dialogue hoboDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "Вот возьми всё что у меня есть, только не трогай меня", hoboActions);
+            Character hobo = new Character("Бродяга", "Поговорить с бродягой", new List<Dialogue> { hoboDialogue });
+
             Dialogue lookingAround = new Dialogue("Осмотреть окрестности", "В таверне чисто и тепло");
-            Room tavern = new Room("Tavern", new List<Dialogue> { lookingAround });
+
+            List<Dialogue> tavernDialogues = new List<Dialogue> { lookingAround };
+            List<Character> tavernCharacters = new List<Character> { hobo };
+            Room tavern = new Room("Таверна", tavernDialogues, tavernCharacters);
             Game game = new Game();
 
             game.DialogueSet += OnDialogueSet; // TODO: unsubscribe in gameover

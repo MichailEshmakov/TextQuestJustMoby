@@ -34,7 +34,13 @@ namespace TextQuest
         public Dialogue Enter(string enterPhrase = "")
         {
             string enterAnswer = GenerateEnterAnswer();
-            List<DialogueAction> actions = GenerateActionsFromDialogues();
+            List<DialogueAction> actions = _dialogues.ToActions();
+            foreach (Character character in _characters)
+            {
+                DialogueAction speakWithCharacterOption = character.GetOption();
+                actions.Add(speakWithCharacterOption);
+            }
+
             return new Dialogue(enterPhrase, enterAnswer, actions);
         }
 
@@ -55,17 +61,6 @@ namespace TextQuest
                 characterList += NobodyPhrase;
 
             return $"{RoomPhrase}{_name}\n{CharacterPhrase}{characterList}";
-        }
-
-        private List<DialogueAction> GenerateActionsFromDialogues()
-        {
-            List<DialogueAction> dialogueActions = new List<DialogueAction>();
-            foreach (Dialogue dialogue in _dialogues)
-            {
-                dialogueActions.Add(new DialogueDialogueAction(name: dialogue.PlayerPhrase, dialogue: dialogue));
-            }
-
-            return dialogueActions;
         }
     }
 }
