@@ -10,10 +10,19 @@ namespace TextQuest
     {
         private const string EmptyDialogueAnswer = "Ок";
 
+        private readonly Player _player;
         private Dialogue _currentDialogue;
         private Room _currentRoom;
 
         public event Action<Game, Dialogue> DialogueSet;
+
+        public Game(Player player)
+        {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
+            _player = player;
+        }
 
         public void SetDialogue(Dialogue dialogue)
         {
@@ -37,7 +46,7 @@ namespace TextQuest
                 throw new ArgumentNullException(nameof(room));
 
             _currentRoom = room;
-            Dialogue roomDialogue = _currentRoom.Enter(enterPhrase);
+            Dialogue roomDialogue = _currentRoom.Enter(_player, enterPhrase);
             SetDialogue(roomDialogue);
         }
 
@@ -91,7 +100,10 @@ namespace TextQuest
             {
                 SetRoom(movingDialogueAction.Room);
             }
-
+            else if (action is EventDialogueAction eventDialogueAction)
+            {
+                _player.AddEvents(eventDialogueAction.Events);
+            }
         }
     }
 }

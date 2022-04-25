@@ -12,14 +12,13 @@ namespace TextQuest
 
         public Dialogue NextDialogue => _nextDialogue;
 
-        public DialogueDialogueAction(Dialogue dialogue, string name = null, DialogueAction next = null) : 
-            base(name ?? dialogue.PlayerPhrase, next)
+        public DialogueDialogueAction(Dialogue dialogue, string name = null) : 
+            base(name ?? dialogue.PlayerPhrase, null)
         {
             if (dialogue == null)
                 throw new ArgumentNullException(nameof(dialogue));
 
             _nextDialogue = dialogue;
-            // TODO: сделать глубокую проверку вперед, чтобы не было двух диалоговых событий в одной цепочке
         }
     }
 }

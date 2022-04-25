@@ -20,6 +20,9 @@ namespace TextQuest
         {
             _name = name;
             _next = next;
+
+            if (_next != null && string.IsNullOrEmpty(_name))
+                _name = next.Name;
         }
 
         public void Do()

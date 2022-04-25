@@ -31,13 +31,13 @@ namespace TextQuest
             GenerateEnterAnswer();
         }
 
-        public Dialogue Enter(string enterPhrase = "")
+        public Dialogue Enter(Player player, string enterPhrase = "")
         {
             string enterAnswer = GenerateEnterAnswer();
             List<DialogueAction> actions = _dialogues.ToActions();
             foreach (Character character in _characters)
             {
-                DialogueAction speakWithCharacterOption = character.GetOption();
+                DialogueAction speakWithCharacterOption = character.GetOption(player);
                 actions.Add(speakWithCharacterOption);
             }
 

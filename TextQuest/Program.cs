@@ -15,19 +15,32 @@ namespace TextQuest
             Dialogue robHoboDialogue = new Dialogue("Забрать всё что у него есть", "Я теперь умру с голоду");
             Dialogue saveHoboDialogue = new Dialogue("Оставить бродягу в покое", "Бродяга всадил Вам нож в спину как только Вы отвернулись");
 
-            DialogueDialogueAction robHoboAction = new DialogueDialogueAction(robHoboDialogue);
-            DialogueDialogueAction saveHoboAction = new DialogueDialogueAction(saveHoboDialogue);
+            HashSet<string> robHoboEvents = new HashSet<string> { Events.HoboIsRobbed, Events.MadalionIsGiven };
+            DialogueDialogueAction robHoboDialogueAction = new DialogueDialogueAction(robHoboDialogue);
+            EventDialogueAction robHoboEventsAction = new EventDialogueAction(robHoboEvents, next: robHoboDialogueAction);
+            DialogueDialogueAction saveHoboDialogueAction = new DialogueDialogueAction(saveHoboDialogue);
 
-            List<DialogueAction> hoboActions = new List<DialogueAction> { robHoboAction, saveHoboAction };
-            Dialogue hoboDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "Вот возьми всё что у меня есть, только не трогай меня", hoboActions);
-            Character hobo = new Character("Бродяга", "Поговорить с бродягой", new List<Dialogue> { hoboDialogue });
+            List<DialogueAction> hoboActions = new List<DialogueAction> { robHoboEventsAction, saveHoboDialogueAction };
+            Dialogue hoboBeforeRobeDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "Вот возьми всё что у меня есть, только не трогай меня", hoboActions);
+            Dialogue hoboAfterRobeDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "У меня больше ничего нет"); // TODO: сделать это из экшена, а не в начале
+            Condition defaultHoboCondition = new DefaultCondition();
+            Condition isHoboRobedCondition = new EventCondition(Events.HoboIsRobbed);
+            Dictionary<Condition, Dialogue> hoboDialogues = new Dictionary<Condition, Dialogue>
+            {
+                { isHoboRobedCondition, hoboAfterRobeDialogue },
+                { defaultHoboCondition, hoboBeforeRobeDialogue }
+            };
+            DialogueNode hoboDialogueNode = new DialogueNode(hoboDialogues);
+
+            Character hobo = new Character("Бродяга", "Поговорить с бродягой", hoboDialogueNode);
 
             Dialogue lookingAround = new Dialogue("Осмотреть окрестности", "В таверне чисто и тепло");
 
             List<Dialogue> tavernDialogues = new List<Dialogue> { lookingAround };
             List<Character> tavernCharacters = new List<Character> { hobo };
             Room tavern = new Room("Таверна", tavernDialogues, tavernCharacters);
-            Game game = new Game();
+            Player player = new Player();
+            Game game = new Game(player);
 
             game.DialogueSet += OnDialogueSet; // TODO: unsubscribe in gameover
 

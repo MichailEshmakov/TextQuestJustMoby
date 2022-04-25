@@ -10,26 +10,28 @@ namespace TextQuest
     {
         private readonly string _name;
         private readonly string _optionMarker;
-        private readonly List<Dialogue> _dialogues;
+        private readonly DialogueNode _dialogueNode;
 
         public string Name => _name;
-        private string OptionMarker => _optionMarker;
 
-        public Character(string name, string optionMarker, List<Dialogue> dialogues)
+        public Character(string name, string optionMarker, DialogueNode dialogueNode)
         {
+            if (dialogueNode == null)
+                throw new ArgumentNullException(nameof(dialogueNode));
+
             _name = name;
             _optionMarker = optionMarker;
-            _dialogues = dialogues;
+            _dialogueNode = dialogueNode;
         }
 
-        public Dialogue Speak()
+        public Dialogue Speak(Player player)
         {
-            return _dialogues[0];
+            return _dialogueNode.GetActualDialogue(player);
         }
 
-        public DialogueAction GetOption()
+        public DialogueAction GetOption(Player player)
         {
-            return new DialogueDialogueAction(Speak(), _optionMarker);
+            return new DialogueDialogueAction(Speak(player), _optionMarker);
         }
     }
 }
