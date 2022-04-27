@@ -18,11 +18,16 @@ namespace TextQuest
             HashSet<string> robHoboEvents = new HashSet<string> { Events.HoboIsRobbed, Events.MadalionIsGiven };
             DialogueDialogueAction robHoboDialogueAction = new DialogueDialogueAction(robHoboDialogue);
             EventDialogueAction robHoboEventsAction = new EventDialogueAction(robHoboEvents, next: robHoboDialogueAction);
-            DialogueDialogueAction saveHoboDialogueAction = new DialogueDialogueAction(saveHoboDialogue);
+            IValue robHoboMoney = new Money(50);
+            AddingDialogueAction robHoboAddingAction = new AddingDialogueAction(robHoboMoney, next: robHoboEventsAction);
 
-            List<DialogueAction> hoboActions = new List<DialogueAction> { robHoboEventsAction, saveHoboDialogueAction };
+            IValue saveHoboDamage = new Health(100);
+            DialogueDialogueAction saveHoboDialogueAction = new DialogueDialogueAction(saveHoboDialogue);
+            RemovingDialogueAction saveHoboRemovingAction = new RemovingDialogueAction(saveHoboDamage, next : saveHoboDialogueAction);
+
+            List<DialogueAction> hoboActions = new List<DialogueAction> { robHoboAddingAction, saveHoboRemovingAction };
             Dialogue hoboBeforeRobeDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "Вот возьми всё что у меня есть, только не трогай меня", hoboActions);
-            Dialogue hoboAfterRobeDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "У меня больше ничего нет"); // TODO: сделать это из экшена, а не в начале
+            Dialogue hoboAfterRobeDialogue = new Dialogue("Жизнь или смерть, грязный бродяга!", "У меня больше ничего нет");
             Condition defaultHoboCondition = new DefaultCondition();
             Condition isHoboRobedCondition = new EventCondition(Events.HoboIsRobbed);
             Dictionary<Condition, Dialogue> hoboDialogues = new Dictionary<Condition, Dialogue>
@@ -42,15 +47,25 @@ namespace TextQuest
             Player player = new Player();
             Game game = new Game(player);
 
-            game.DialogueSet += OnDialogueSet; // TODO: unsubscribe in gameover
+            game.DialogueSet += OnDialogueSet;
 
             game.SetRoom(tavern);
+        }
+
+        private static void OverGame(Game game)
+        {
+            game.DialogueSet -= OnDialogueSet;
+            Environment.Exit(0);
         }
 
         private static void OnDialogueSet(Game game, Dialogue dialogue)
         {
             ShowDialogue(dialogue);
             int input = GetInput(dialogue);
+
+            if (game.IsOver)
+                OverGame(game);
+
             Console.Clear();
             game.ChooseAction(input - 1);
         }

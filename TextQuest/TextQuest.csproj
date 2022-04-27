@@ -50,10 +50,11 @@
     <Compile Include="DialogueAction.cs" />
     <Compile Include="DialogueActions\DescriptionDialogueAction.cs" />
     <Compile Include="DialogueActions\EventDialogueAction.cs" />
-    <Compile Include="DialogueActions\GivingDialogueAction.cs" />
+    <Compile Include="DialogueActions\AddingDialogueAction.cs" />
     <Compile Include="DialogueActions\DialogueDialogueAction.cs" />
     <Compile Include="DialogueActions\MovingDialogueAction.cs" />
-    <Compile Include="DialogueActions\TakingDialogueAction.cs" />
+    <Compile Include="DialogueActions\RemovingDialogueAction.cs" />
+    <Compile Include="DialogueActions\ValueDialogueAction.cs" />
     <Compile Include="DialogueNode.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Extentions.cs" />

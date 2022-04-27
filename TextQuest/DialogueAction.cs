@@ -18,6 +18,9 @@ namespace TextQuest
 
         public DialogueAction(string name = "", DialogueAction next = null)
         {
+            if (next == this)
+                throw new ArgumentException(nameof(next));
+
             _name = name;
             _next = next;
 

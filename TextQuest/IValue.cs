@@ -10,8 +10,8 @@ namespace TextQuest
     {
         int Value { get; }
 
-        void Remove(int value);
+        void Add(int adding);
+        void Remove(int removing);
 
-        void Add(int value);
     }
 }

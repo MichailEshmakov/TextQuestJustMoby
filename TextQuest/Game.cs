@@ -13,6 +13,9 @@ namespace TextQuest
         private readonly Player _player;
         private Dialogue _currentDialogue;
         private Room _currentRoom;
+        private bool _isOver;
+
+        public bool IsOver => _isOver;
 
         public event Action<Game, Dialogue> DialogueSet;
 
@@ -22,6 +25,7 @@ namespace TextQuest
                 throw new ArgumentNullException(nameof(player));
 
             _player = player;
+            _player.Dead += OnPlayerDead;
         }
 
         public void SetDialogue(Dialogue dialogue)
@@ -53,6 +57,12 @@ namespace TextQuest
         public void ChooseAction(int option)
         {
             _currentDialogue.DoAction(option);
+        }
+
+        private void OnPlayerDead()
+        {
+            _player.Dead -= OnPlayerDead;
+            _isOver = true;
         }
 
         private void AddReturnAction()
@@ -103,6 +113,18 @@ namespace TextQuest
             else if (action is EventDialogueAction eventDialogueAction)
             {
                 _player.AddEvents(eventDialogueAction.Events);
+            }
+            else if (action is AddingDialogueAction addingDialogueAction)
+            {
+                _player.Add((dynamic)addingDialogueAction.Value);
+            }
+            else if (action is RemovingDialogueAction removingDialogueAction)
+            {
+                _player.Remove((dynamic)removingDialogueAction.Value);
+            }
+            else
+            {
+                throw new ArgumentException(nameof(action));
             }
         }
     }

@@ -6,7 +6,29 @@ using System.Threading.Tasks;
 
 namespace TextQuest
 {
-    class Health
+    public class Health : IValue
     {
+        private int _value;
+
+        public int Value => _value;
+
+        public event Action Dead;
+
+        public Health(int value = 1)
+        {
+            _value = value;
+        }
+
+        public void Add(int adding)
+        {
+            _value += adding;
+        }
+
+        public void Remove(int removing)
+        {
+            _value -= removing;
+            if (_value <= 0)
+                Dead?.Invoke();
+        }
     }
 }
