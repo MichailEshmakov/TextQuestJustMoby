@@ -67,6 +67,7 @@
     <Compile Include="IValue.cs" />
     <Compile Include="Values\Health.cs" />
     <Compile Include="Condition.cs" />
+    <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
